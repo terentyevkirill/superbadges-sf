@@ -4,11 +4,7 @@ public with sharing class WarehouseCalloutService {
     
     @future(callout=true)
     public static void runWarehouseEquipmentSync() {
-        Http http = new Http();
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint(WAREHOUSE_URL);
-        req.setMethod('GET');
-        HttpResponse res = http.send(req);
+        HttpResponse res = makeGetCallout();
         if (res.getStatusCode() == 200) {
             List<Object> results = (List<Object>) JSON.deserializeUntyped(res.getBody());
             System.debug('results: ' + results);
@@ -30,5 +26,25 @@ public with sharing class WarehouseCalloutService {
             }
             upsert equipmentToUpdate Warehouse_SKU__c;
         }   
+    }
+
+    public static HttpResponse makeGetCallout() {
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(WAREHOUSE_URL);
+        req.setMethod('GET');
+        HttpResponse res = http.send(req);
+        return res;
+    }
+
+    public static HttpResponse makePostCallout(String body) {
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(WAREHOUSE_URL);
+        req.setMethod('POST');
+        req.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        req.setBody(body);
+        HttpResponse res = http.send(req);
+        return res;
     }
 }
