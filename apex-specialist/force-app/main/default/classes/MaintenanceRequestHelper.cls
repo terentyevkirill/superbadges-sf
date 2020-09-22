@@ -3,7 +3,7 @@ public with sharing class MaintenanceRequestHelper {
     public static void updateWorkOrders(Map<Id, Case> caseMap) {
         Map<Id, Integer> productIdMap = new Map<Id, Integer>();
         List<Case> newCaseList = new List<Case>();
-        List<Product2>   = [select Id, Maintenance_Cycle__c from Product2];     
+        List<Product2> productList  = [select Id, Maintenance_Cycle__c from Product2];     
         for (Product2 product_i : productList) {
             if (product_i != null && product_i.Maintenance_Cycle__c != null) {
                 productIdMap.put(product_i.Id, Integer.valueOf(product_i.Maintenance_Cycle__c));
