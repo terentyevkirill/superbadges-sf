@@ -3,7 +3,7 @@ trigger MaintenanceRequest on Case (before update, after update) {
 
     if (Trigger.isUpdate && Trigger.isAfter) {
         for (Case req_i : Trigger.new) {
-            if ((req_i.Type == 'Repair ' || req_i.Type == 'Routine Maintenance') 
+            if ((req_i.Type == 'Repair' || req_i.Type == 'Routine Maintenance') 
                 && req_i.IsClosed) {
                     caseMap.put(req_i.Id, req_i);
             }
