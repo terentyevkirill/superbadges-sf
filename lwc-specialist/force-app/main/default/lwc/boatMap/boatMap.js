@@ -63,7 +63,7 @@ export default class BoatMap extends LightningElement {
     }
     // Subscribe to the message channel to retrieve the recordID and assign it to boatId.
     if (!this.subscription) {
-      subscribeMC();
+      this.subscribeMC();
     }
     
   }
