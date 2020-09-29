@@ -56,7 +56,7 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
         const userId = event.target.dataset.recordId
         // Generate a URL to a User record page
         this[NavigationMixin.Navigate]({
-            type: 'standart__recordPage',
+            type: 'standard__recordPage',
             attributes: {
                 recordId: userId ,
                 objectApiName: 'User',
