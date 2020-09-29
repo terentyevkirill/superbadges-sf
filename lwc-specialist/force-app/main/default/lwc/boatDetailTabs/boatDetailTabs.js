@@ -65,13 +65,13 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
     // Navigates to record page
     navigateToRecordViewPage() {
         this[NavigationMixin.Navigate]({
-        type: "standard__recordPage",
-        attributes: {
-            recordId: this.boatId,
-            actionName: "view"
-        }
-    });
-        }
+            type: "standard__recordPage",
+            attributes: {
+                recordId: this.boatId,
+                actionName: "view"
+            }
+        });
+    }
     
     // Navigates back to the review list, and refreshes reviews component
     handleReviewCreated() {
