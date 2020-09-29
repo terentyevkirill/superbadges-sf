@@ -11,22 +11,22 @@ public class BillingCalloutServiceTest {
         Project__c proj = new Project__c();
         proj.Name = 'Test Project';
         proj.Billable_Amount__c = 1000;        
-        proj.ProjectRef__c = 'TestRef 1';
+        proj.ProjectRef__c = 'TestRef';
         proj.Status__c = 'Running';
         proj.Opportunity__c = opp.Id;
         insert proj;
         
         ServiceCredentials__c creds = new ServiceCredentials__c();
-        creds.Name = 'BillingServiceCredential 1';
-        creds.Username__c = 'user1';
-        creds.Password__c = 'password1';
+        creds.Name = 'BillingServiceCredential';
+        creds.Username__c = 'username';
+        creds.Password__c = 'password';
         insert creds;
     }
 
     @isTest
     static void testCallBillingServiceSuccess() {
         Test.setMock(WebServiceMock.class, new BillingCalloutServiceMock()); 
-        Project__c project = [SELECT Status__C FROM Project__c WHERE ProjectRef__c = 'TestRef 1'];
+        Project__c project = [SELECT Status__C FROM Project__c WHERE ProjectRef__c = 'TestRef'];
         Test.startTest(); 
             project.Status__c = 'Billable';
             update project;
@@ -36,7 +36,7 @@ public class BillingCalloutServiceTest {
     @isTest
     static void testCallBillingServiceFailure() {
         Test.setMock(WebServiceMock.class, new BillingCalloutServiceMockFailure()); 
-        Project__c project = [SELECT Status__C FROM Project__c WHERE ProjectRef__c = 'TestRef 1'];
+        Project__c project = [SELECT Status__C FROM Project__c WHERE ProjectRef__c = 'TestRef'];
         Test.startTest(); 
             project.Status__c = 'Running';
             update project;
