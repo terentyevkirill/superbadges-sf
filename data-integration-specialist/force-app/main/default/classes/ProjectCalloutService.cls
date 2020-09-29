@@ -13,12 +13,12 @@ public class ProjectCalloutService {
                 Id = :oppIds[0]
         ];
         String token = ServiceTokens__c.getValues('ProjectServiceToken').Token__c;
-        String jsonBody = '{\n' +
-        ' "opportunityId" : "'+opp.Id+'",\n'+
-        ' "opportunityName" : "'+opp.Name+'",\n'+
-        ' "accountName" : "'+opp.Account.Name+'",\n'+
-        ' "closeDate" : "'+String.ValueOf(opp.CloseDate).mid(0,10)+'",\n'+   
-        ' "amount" : "'+opp.Amount+'"\n}';
+        String jsonBody = '{\n'  +
+        ' "opportunityId" : "'   + opp.Id+'",\n'+
+        ' "opportunityName" : "' + opp.Name+'",\n'+
+        ' "accountName" : "'     + opp.Account.Name+'",\n'+
+        ' "closeDate" : "'       + String.ValueOf(opp.CloseDate).mid(0,10)+'",\n'+   
+        ' "amount" : "'          + opp.Amount+'"\n}';
 
         System.enqueueJob(new QueueablePMSCall(token, jsonBody, opp.Id));
     }
