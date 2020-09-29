@@ -24,7 +24,7 @@ public class ProjectCalloutServiceTest {
     }
 
     @isTest
-    static void testProjectCallout() {
+    static void testProjectCalloutSuccess() {
         Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>([SELECT Id FROM Opportunity]);
         List<Id> oppIds = new List<Id>(oppMap.keySet());
         Test.startTest();
