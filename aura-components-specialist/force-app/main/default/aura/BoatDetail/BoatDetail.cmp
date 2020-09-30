@@ -23,8 +23,8 @@
                         <span></span>
                     </div>
                     <div class="boatproperty">
-                        <span class="label">Length: {!v.boat.Length__c}</span>
-                        <span> ft</span>
+                        <span class="label">Length: {!v.boat.Length__c} ft</span>
+                        <span></span>
                     </div>
                     <div class="boatproperty">
                         <span class="label">Est. Price: </span>
