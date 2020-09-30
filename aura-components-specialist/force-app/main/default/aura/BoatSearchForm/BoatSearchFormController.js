@@ -22,5 +22,17 @@
         });
         console.log("boatTypeId: " + boatTypeId);
         createRecordEvent.fire();
+    },
+
+    onFormSubmit : function(component, event, helper) {
+        var boatTypeId = component.find("boatTypes").get("v.value");
+        var data = {
+            "boatTypeId" : boatTypeId
+        };
+        var formsubmit = component.getEvent("formsubmit");
+        formsubmit.setParams({
+            "formData" : data
+        });
+        formsubmit.fire();
     }
 })
