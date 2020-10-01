@@ -1,0 +1,29 @@
+<aura:component
+    implements="flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute type="Boat__c" name="boat"/>
+    <aura:attribute type="BoatReview__c" name="boatReview"/>
+    <aura:attribute type="BoatReview__c" name="simpleBoatReview"/>
+    <aura:attribute type="String" name="recordError" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent type="c:BoatReviewAdded" name="BoatReviewAdded"/>
+
+    <force:recordData aura:id="service" 
+        recordId=""
+        targetFields="{!v.boatReview}"
+        fields="Id,Name,Comment__c,Boat__c"
+        targetRecord="{!v.simpleBoatReview}"
+        targetError="{!v.recordError}"
+        recordUpdated="{!c.onRecordUpdated}"/>
+
+    <div class="slds-form slds-form_stacked">
+        <lightning:input aura:id="title" name="Title" label="Title" value="{!v.boatReview.Name}" required="true"/>
+        <lightning:inputRichText aura:id="description" title="Description" disabledCategories="FORMAT_FONT" value="{!v.boatReview.Comment__c}"/>
+        <c:FiveStarRating value="{!v.boatReview.Rating__c}" readonly="false"/>
+        <lightning:button label="Submit" iconName="utility:save" variant="brand" onclick="{!c.onSave}"/> 
+    </div>
+    <aura:if isTrue="{!not(empty(v.recordError))}">
+        <div class="recordError">
+            {!v.recordError}
+        </div>
+    </aura:if>
+</aura:component>	
