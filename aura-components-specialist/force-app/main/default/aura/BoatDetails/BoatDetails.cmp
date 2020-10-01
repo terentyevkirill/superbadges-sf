@@ -1,6 +1,7 @@
 <aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome" access="global" >
-    <aura:attribute name="boat" Type="Boat__c"/>
-    <aura:attribute name="id" Type="Id"/>
+    <aura:attribute name="boat" type="Boat__c"/>
+    <aura:attribute name="id" type="Id"/>
+    <aura:attribute name="selectedTabId" type="String" access="private"/>
     <aura:handler event="c:BoatSelected" action="{!c.onBoatSelected}"/>
     <aura:handler name="BoatReviewAdded" event="c:BoatReviewAdded" action="{!c.onBoatReviewAdded}" phase="capture"/>
    
@@ -19,14 +20,14 @@
                       recordUpdated="{!c.onRecordUpdated}"/>
    
     <aura:if isTrue="{! !empty(v.boat) }">
-        <lightning:tabset>
-            <lightning:tab label="Details">
+        <lightning:tabset aura:id="boatTabSet" selectedTabId="{!v.selectedTabId}">
+            <lightning:tab label="Details" id="tabDetails">
                 <c:BoatDetail boat="{!v.boat}"/>          
             </lightning:tab>
-            <lightning:tab label="Reviews">
-                Two Content !
+            <lightning:tab label="Reviews" id="boatreviewtab">
+                <c:BoatReviews aura:id="boatreviewcomponent" boat="{!v.boat}"/>
             </lightning:tab>
-            <lightning:tab label="Add Review">
+            <lightning:tab label="Add Review" id="tabAddReview">
                 <c:AddBoatReview boat="{!v.boat}"/>
             </lightning:tab>
         </lightning:tabset>
