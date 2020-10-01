@@ -2,6 +2,7 @@
     <aura:attribute name="boat" Type="Boat__c"/>
     <aura:attribute name="id" Type="Id"/>
     <aura:handler event="c:BoatSelected" action="{!c.onBoatSelected}"/>
+    <aura:handler name="BoatReviewAdded" event="c:BoatReviewAdded" action="{!c.onBoatReviewAdded}" phase="capture"/>
    
     <force:recordData aura:id="service" recordId="{!v.id}"
                       targetFields ="{!v.boat}"
@@ -26,7 +27,7 @@
                 Two Content !
             </lightning:tab>
             <lightning:tab label="Add Review">
-                Three Content !
+                <c:AddBoatReview boat="{!v.boat}"/>
             </lightning:tab>
         </lightning:tabset>
     </aura:if>
