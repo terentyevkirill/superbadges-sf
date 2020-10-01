@@ -41,6 +41,7 @@
                         <div class="slds-post__content slds-text-longform">
                             <p>{!boatReview.Name}</p>
                             <lightning:formattedRichText value="{!boatReview.Comment__c}"/>
+                            <c:FiveStarRating value="{!boatReview.Rating__c}" readonly="true"/>
                         </div>
                     </article>
                 </li>

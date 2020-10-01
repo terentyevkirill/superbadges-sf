@@ -7,7 +7,7 @@
             "boatId" : boatId
         });
         action.setCallback(this, function(result) {
-            var state = result.state;
+            var state = result.getState();
             if (state === 'SUCCESS') {
                 var data = result.getReturnValue();
                 component.set("v.boatReviews", data);
