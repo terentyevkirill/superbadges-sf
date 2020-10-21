@@ -305,12 +305,6 @@
     <members>*</members>
     <name>LightningOnboardingConfig</name>
   </types>
-<!--
- <types>
-    <members>*</members>
-    <name>ManagedContentType</name>
-  </types>
-  -->
   <types>
     <members>*</members>
     <name>MatchingRules</name>
