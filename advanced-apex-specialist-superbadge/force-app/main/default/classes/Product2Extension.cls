@@ -65,10 +65,9 @@ public class Product2Extension {
 
             insert pbeList;
 
-            //If successful clear the list and display an informational message
-            apexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO,productsToInsert.size()+' Inserted'));
-            productsToInsert.clear();   //Do not remove
-            addRows();  //Do not remove
+            apexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO,productsToInsert.size() + ' Inserted'));
+            productsToInsert.clear();
+            addRows();
         } catch (Exception e) {
             Database.rollback(sp);
             ApexPages.addMessage(new Apexpages.message(ApexPages.Severity.ERROR, Constants.ERROR_MESSAGE));
