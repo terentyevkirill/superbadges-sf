@@ -1,48 +1,58 @@
-@isTest
-private class Product2Tests {
+@isTest(seeAllData = false) private class Product2Tests {
+	/**
+	 * @name product2Extension_UnitTest
+	 * @description UnitTest for product2Extension
+	 **/
+	private static TestMethod void Product2Extension_UnitTest() {
+		Test.startTest();
+        PageReference pageRef = Page.Product2New;
+        
+		Product2 prod = new Product2(Name='test', isActive= true);
+		ApexPages.StandardController sc = new ApexPages.StandardController(prod);
 
-    /**
-     * @name product2Extension_UnitTest
-     * @description UnitTest for product2Extension
-    **/
-    static TestMethod void Product2Extension_UnitTest() {
-        // Set-up user
-        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
-        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
-        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
-        	EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-        	LocaleSidKey='en_US', ProfileId = p.Id, TimeZoneSidKey='America/Los_Angeles', UserName=uniqueUserName);
+		Product2Extension ext = new Product2Extension(sc);
+        
+        System.assertEquals(Constants.DEFAULT_ROWS, ext.productsToInsert.size());
+        ext.AddRows();
+        System.assertEquals(Constants.DEFAULT_ROWS * 2, ext.productsToInsert.size());
 
-        System.runAs(u) {
-            PageReference pageRef = Page.Product2New;
-            Test.setCurrentPage(pageRef);
-            Product2 prod = new Product2(name='Test',isActive=true);
-            ApexPages.StandardController stdc = new ApexPages.StandardController(prod);
-            Product2Extension ext = new Product2Extension(stdc);        
-            System.assertEquals(Constants.DEFAULT_ROWS, ext.productsToInsert.size());
+        for(Integer i=0; i< Constants.DEFAULT_ROWS; i++){
+            
+            List<Product2> newProd = TestDataFactory.ConstructProducts(1);
+            ext.productsToInsert[i].productRecord = newProd[0];
 
-            ext.addRows();
-            System.assertEquals(Constants.DEFAULT_ROWS * 2, ext.productsToInsert.size());
-
-            integer x = 0; 
-            for (Product2Extension.ProductWrapper pw_i : ext.productsToInsert){
-                pw_i.productrecord.name='TESTPRODUCT ' + x;
-                pw_i.productRecord.IsActive = true;
-                pw_i.productRecord.Initial_Inventory__c = 20;
-                pw_i.productRecord.Family = Constants.PRODUCT_FAMILY[0].getValue();           
-                pw_i.pricebookEntryRecord.UnitPrice = 10;
-                x++; 
-                if (x == Constants.DEFAULT_ROWS) {
-                    break;
-                }
-            }
-
-            ext.Save();
-            List<Product2> createdProducts = [SELECT Id FROM Product2];
-            System.assertEquals(5, createdProducts.size());
-
-            ext.GetFamilyOptions();
-            ext.GetInventory();
+            PriceBookEntry pbEntry = new PriceBookEntry(Unitprice = 100, isActive = true);
+            ext.productsToInsert[i].pricebookEntryRecord = pbEntry;
         }
+        
+		ext.Save();
+        ext.GetFamilyOptions();
+		ext.GetInventory();
+
+        List<Product2> selectedProd = [Select id from Product2];
+        System.assertEquals(Constants.DEFAULT_ROWS, selectedProd.size());
+
+		Test.stopTest();
     }
+    
+    @IsTest
+    private static void Product2Trigger_UnitTest(){
+        
+        Test.startTest();
+        CollaborationGroup c = TestDataFactory.ConstructCollaborationGroup();
+        insert c;
+
+        Product2 newProduct = TestDataFactory.ConstructProducts(1)[0];
+        newProduct.Quantity_Ordered__c = 5;
+        insert newProduct;
+        
+        
+        newProduct.Quantity_Ordered__c=96;
+        update newProduct;
+
+        delete newProduct;
+        Test.stopTest();
+        
+    }
+
 }
